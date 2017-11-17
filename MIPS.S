@@ -1,7 +1,7 @@
 .data
 char_array: .space 9 #allocates space for characters
 new_line: .asciiz "\n" #used to separate 8 characters from extra ones
-invalid_hex: .asciiz "Invalid Hexadecimal Number"
+invalid_hex: .asciiz "Invalid hexadecimal number."
 .text
   main:
       li $v0, 8 #receives input
