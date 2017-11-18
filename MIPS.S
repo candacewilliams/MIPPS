@@ -16,9 +16,10 @@ invalid_hex: .asciiz "Invalid hexadecimal number."
       addi $t1, $0, 0 #initializes $t1 to zero (stores character)
       la $t2, char_array #stores string address into register
       add $t3, $0, $0 #initializes $t3 to zero (counter)
+      lb $t1,0($t2) #loads first index of string
+      beq $t1, 10, Invalid #looks for new line character at first index
 
   find_length:
-
       lb $t1,0($t2) #loads first index of string
       beq $t1,0, Exit #checks for null, then exits
       beq $t1,10, Exit #looks for new line character, then exits
@@ -43,7 +44,7 @@ invalid_hex: .asciiz "Invalid hexadecimal number."
       beq $t1, 0, Exit_2 #checks for null, then exits
       beq $t1, 10, Exit_2 #looks for new line character, then exits
       addi $t2, $t2, 1 #points to next character in string
-      beq $t1, 32, check_string #doesn't increment if character is a space
+      beq $t1, 32, Invalid #doesn't increment if character is a space
       blt $t1, 48, Invalid #checks if character is before 0 in ASCII chart
       blt $t1, 58, Translate_Number #checks if character is between 48 and 57
       blt $t1, 65, Invalid #checks if character is between 58 and 64
@@ -53,7 +54,7 @@ invalid_hex: .asciiz "Invalid hexadecimal number."
       blt $t1, 128, Invalid #checks if character is between 103 and 127
 
   Invalid:
-      la $a0, invalid_hex # loads newline
+      la $a0, invalid_hex #loads string
       li $v0, 4 #prints new line for string
       syscall
 
